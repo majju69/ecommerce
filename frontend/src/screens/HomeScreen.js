@@ -4,6 +4,7 @@ import Product from "../components/Product.js";
 import { Col, Row } from 'react-bootstrap';
 
 const HomeScreen = () => {
+  
   return (
     <>
       <h1>Latest Products</h1>
