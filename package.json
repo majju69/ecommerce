@@ -1,0 +1,15 @@
+{
+  "name": "ecommerce",
+  "version": "1.0.0",
+  "description": "ecommerce project",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon backend/server.js"
+  },
+  "author": "Kush Mazumdar",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
