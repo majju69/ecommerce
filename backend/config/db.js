@@ -11,11 +11,11 @@ const connectDB=async()=>
             // useCreateIndex: true,    deprecated
             // useFindAndModify: false  deprecated
         });
-        console.log("\nMongoDB Connected : ", conn.connection.host,"\n");
+        console.log(`\nMongoDB Connected : ${conn.connection.host}\n`.cyan.underline);
     }
     catch(error)
     {
-        console.error("\nError connecting to MongoDB", error.message,"\n");
+        console.error(`\nError connecting to MongoDB", ${error.message}\n`.red.underline.bold);
         process.exit(1);
     }
 }
