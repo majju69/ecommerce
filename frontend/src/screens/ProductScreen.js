@@ -11,10 +11,14 @@ import { Form } from 'react-bootstrap';
 
 const ProductScreen = ({history,match}) =>
 {
-    const [qty,setQty]=useState(0);
+    const [qty,setQty]=useState(1);
     const dispatch = useDispatch();
     const productDetails = useSelector((state) => state.productDetails);
     const {loading, error, product} = productDetails;
+    // if(!product.rating)
+    // {
+    //     product.rating =1;
+    // }
     useEffect(() =>
     {
         dispatch(listProductDetails(match.params.id))
@@ -73,9 +77,7 @@ const ProductScreen = ({history,match}) =>
                                     <Col>Qty:</Col>
                                     <Col>
                                         <Form.Control as="select" value={qty} onChange={(event)=>setQty(event.target.value)}>
-                                            {
-                                                [...Array(product.countInStock).keys()].map(x => <option key={x+1} value={x+1}>{x+1}</option>)
-                                            }
+                                            {[...Array(product.countInStock).keys()].map(x => <option key={x+1} value={x+1}>{x+1}</option>)}
                                         </Form.Control>
                                     </Col>
                                 </Row>
