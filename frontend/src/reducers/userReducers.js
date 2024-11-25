@@ -1,4 +1,4 @@
-import { USER_DETAILS_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS } from "../constants/userConstants";
+import { USER_DETAILS_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_RESET, USER_DETAILS_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS } from "../constants/userConstants";
 
 export const userLoginReducer = (state={},action) =>
 {
@@ -42,6 +42,8 @@ export const userDetailsReducer = (state={user:{}},action) =>
             return {loading: false, user: action.payload};
         case USER_DETAILS_FAIL:
             return {loading: false, error: action.payload};
+        case USER_DETAILS_RESET:
+            return {user: {}};  // reset the user info when the user details are fetched  // This reducer handles the user details fetch, error, and reset actions.  // You can add more actions and reducers as needed for your application.  // For example, you might have a user order history reducer, user address reducer, etc.  // Be sure to follow best practices for handling user state and actions in Redux.  // For example, use Redux Toolkit or Ducks for managing state
         default:
             return state;
     }
