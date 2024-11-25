@@ -3,7 +3,7 @@ import {Form,Button,Row,Col} from 'react-bootstrap';
 import {useDispatch,useSelector} from "react-redux";
 import Message from "../components/Message.js";
 import Loader from "../components/Loader.js";
-import {getUserDetails, getUsrDetails} from "../actions/userActions.js";
+import {getUserDetails,updateUserProfile} from "../actions/userActions.js";
 
 const ProfileScreen = ({location,history}) => {
     const [name,setName]=useState("");
@@ -19,6 +19,9 @@ const ProfileScreen = ({location,history}) => {
 
     const userLogin = useSelector((state) => state.userLogin);
     const {userInfo} = userLogin;
+
+    const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+    const {success} = userUpdateProfile;
 
     useEffect(()=>
     {
@@ -49,7 +52,7 @@ const ProfileScreen = ({location,history}) => {
         }
         else
         {
-            // DISPATCH UPDATE PROFILE
+            dispatch(updateUserProfile({id:user._id,name,email,password}));
         }
     }
 
@@ -58,6 +61,7 @@ const ProfileScreen = ({location,history}) => {
             <h2>User Profile</h2>
                 {message&&<Message variant='danger'>{message}</Message>}
                 {error&&<Message variant='danger'>{error}</Message>}
+                {success&&<Message variant='success'>Profile Updated</Message>}
                 {loading&&<Loader/>}
                 <Form onSubmit={submitHandler}>
                     <Form.Group controlId="name">
@@ -72,12 +76,12 @@ const ProfileScreen = ({location,history}) => {
 
                     <Form.Group controlId="confirmPassword">
                         <Form.Label>Confirm Password</Form.Label>
-                        <Form.Control type="password" placeholder="Enter password" value={password} onChange={(e)=>setPassword(e.target.value)} required/>
+                        <Form.Control type="password" placeholder="Enter password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
                     </Form.Group>
 
                     <Form.Group controlId="password">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Confirm password" value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)} required/>
+                        <Form.Control type="password" placeholder="Confirm password" value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)}/>
                     </Form.Group>
 
                     <Button type="submit" variant="primary">Update</Button>
