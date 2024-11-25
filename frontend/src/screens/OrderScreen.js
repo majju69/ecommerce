@@ -27,10 +27,18 @@ const OrderScreen = ({match}) => {
         order.itemsPrice = addDecimals(order.orderItems.reduce((acc,item) => acc+item.price*item.qty,0));
     }
 
-    useEffect(()=>
+    // useEffect(()=>
+    // {
+    //     dispatch(getOrderDetails(orderId));
+    // },[]);
+    
+    useEffect(() =>
     {
-        dispatch(getOrderDetails(orderId));
-    },[]);
+        if(!order || order._id !== orderId)
+        {
+            dispatch(getOrderDetails(orderId))
+        }
+    },[order, orderId])
 
     return loading?<Loader/>:error?<Message variant='danger'>{error}</Message>:<>
         <h1>Order {order._id}</h1>
