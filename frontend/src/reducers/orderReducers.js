@@ -1,4 +1,4 @@
-import { ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS,ORDER_DETAILS_FAIL,ORDER_DETAILS_REQUEST,ORDER_DETAILS_SUCCESS } from "../constants/orderConstants";
+import { ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS,ORDER_DETAILS_FAIL,ORDER_DETAILS_REQUEST,ORDER_DETAILS_SUCCESS, ORDER_PAY_FAIL, ORDER_PAY_REQUEST, ORDER_PAY_RESET, ORDER_PAY_SUCCESS } from "../constants/orderConstants";
 
 export const orderCreateReducer=(state={},action)=>
 {
@@ -25,6 +25,23 @@ export const orderDetailsReducer=(state={loading:true,orderItems:[],shippingAddr
             return {loading: false, order: action.payload};
         case ORDER_DETAILS_FAIL:
             return {loading: false, error: action.payload};
+        default:
+            return state;
+    }
+}
+
+export const orderPayReducer=(state={},action)=>
+{
+    switch (action.type)
+    {
+        case ORDER_PAY_REQUEST:
+            return {loading: true};
+        case ORDER_PAY_SUCCESS:
+            return {loading: false, success: true};
+        case ORDER_PAY_FAIL:
+            return {loading: false, error: action.payload};
+        case ORDER_PAY_RESET:
+            return {};  // Reset state to initial state when order is paid. This is important to prevent any user-specific data from being persisted between page refreshes.  // This is a common pattern in Redux.  // It's also a good idea to clear the order in the cart when the order is paid.  // This would require changes in the cart and order reducers.  // The cart and order reducers should be combined into a single reducer.  // The order reducer 
         default:
             return state;
     }
