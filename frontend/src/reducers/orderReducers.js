@@ -1,4 +1,4 @@
-import { ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS,ORDER_DETAILS_FAIL,ORDER_DETAILS_REQUEST,ORDER_DETAILS_SUCCESS, ORDER_LIST_FAIL, ORDER_LIST_MY_FAIL, ORDER_LIST_MY_REQUEST, ORDER_LIST_MY_RESET, ORDER_LIST_MY_SUCCESS, ORDER_LIST_REQUEST, ORDER_LIST_SUCCESS, ORDER_PAY_FAIL, ORDER_PAY_REQUEST, ORDER_PAY_RESET, ORDER_PAY_SUCCESS } from "../constants/orderConstants";
+import { ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS,ORDER_DELIVER_FAIL,ORDER_DELIVER_REQUEST,ORDER_DELIVER_RESET,ORDER_DELIVER_SUCCESS,ORDER_DETAILS_FAIL,ORDER_DETAILS_REQUEST,ORDER_DETAILS_SUCCESS, ORDER_LIST_FAIL, ORDER_LIST_MY_FAIL, ORDER_LIST_MY_REQUEST, ORDER_LIST_MY_RESET, ORDER_LIST_MY_SUCCESS, ORDER_LIST_REQUEST, ORDER_LIST_SUCCESS, ORDER_PAY_FAIL, ORDER_PAY_REQUEST, ORDER_PAY_RESET, ORDER_PAY_SUCCESS } from "../constants/orderConstants";
 
 export const orderCreateReducer=(state={},action)=>
 {
@@ -41,6 +41,23 @@ export const orderPayReducer=(state={},action)=>
         case ORDER_PAY_FAIL:
             return {loading: false, error: action.payload};
         case ORDER_PAY_RESET:
+            return {};  // Reset state to initial state when order is paid. This is important to prevent any user-specific data from being persisted between page refreshes.  // This is a common pattern in Redux.  // It's also a good idea to clear the order in the cart when the order is paid.  // This would require changes in the cart and order reducers.  // The cart and order reducers should be combined into a single reducer.  // The order reducer 
+        default:
+            return state;
+    }
+}
+
+export const orderDeliverReducer=(state={},action)=>
+{
+    switch (action.type)
+    {
+        case ORDER_DELIVER_REQUEST:
+            return {loading: true};
+        case ORDER_DELIVER_SUCCESS:
+            return {loading: false, success: true};
+        case ORDER_DELIVER_FAIL:
+            return {loading: false, error: action.payload};
+        case ORDER_DELIVER_RESET:
             return {};  // Reset state to initial state when order is paid. This is important to prevent any user-specific data from being persisted between page refreshes.  // This is a common pattern in Redux.  // It's also a good idea to clear the order in the cart when the order is paid.  // This would require changes in the cart and order reducers.  // The cart and order reducers should be combined into a single reducer.  // The order reducer 
         default:
             return state;
