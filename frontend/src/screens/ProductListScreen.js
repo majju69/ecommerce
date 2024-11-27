@@ -28,7 +28,7 @@ const ProductListScreen = ({history,match}) => {
     useEffect(()=>
     {
         dispatch({type: PRODUCT_CREATE_RESET});  // Reset product create success message after navigating to product list
-        if(!userInfo.isAdmin)
+        if(!userInfo||!userInfo.isAdmin)
         {
             history.push("/login");
         }
