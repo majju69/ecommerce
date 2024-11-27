@@ -9,6 +9,7 @@ import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import { proxy } from "./setupProxy.js";
 
 dotenv.config();
 
@@ -33,11 +34,23 @@ app.get("/api/config/paypal",(req,res)=>res.send(process.env.PAYPAL_CLIENT_ID));
 const __dirname=path.resolve();     // __dirname is only avaliable in CJS
 app.use("/uploads",express.static(path.join(__dirname,"/uploads")));
 
+if(process.env.NODE_ENV==="production")
+{
+    app.use(express.static(path.join(__dirname,"/frontend/build")));
+
+    app.get("*",(req,res)=>
+    {
+        res.sendFile(path.resolve(__dirname,"frontend","build","index.html"));
+    });
+}
+
 app.use(notFound);
 
 app.use(errorHandler);
 
+app.use('/api', proxy);
 const PORT=process.env.PORT || 8000;
+
 
 app.listen(PORT,()=>
 {
