@@ -4,14 +4,17 @@ import {Table,Button,Row,Col} from 'react-bootstrap';
 import {useDispatch,useSelector} from "react-redux";
 import Message from "../components/Message.js";
 import Loader from "../components/Loader.js";
+import Paginate from '../components/Paginate.js';
 import {listProducts,deleteProduct,createProduct} from "../actions/productActions.js";
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants.js';
 
 const ProductListScreen = ({history,match}) => {
+    const pageNumber = match.params.pageNumber||1;
+
     const dispatch = useDispatch();
 
     const productList = useSelector((state) => state.productList);
-    const {loading,error,products} = productList;
+    const {loading,error,products,page,pages} = productList;
 
     const productDelete = useSelector((state) => state.productDelete);
     const {loading:loadingDelete,error:errorDelete,success:successDelete} = productDelete;
@@ -35,9 +38,9 @@ const ProductListScreen = ({history,match}) => {
         }
         else
         {
-            dispatch(listProducts());
+            dispatch(listProducts("",pageNumber));
         }
-    },[dispatch,history,userInfo,successDelete,successCreate,createdProduct]);
+    },[dispatch,history,userInfo,successDelete,successCreate,createdProduct,pageNumber]);
 
     const deleteHandler = (id) =>
     {
@@ -69,7 +72,7 @@ const ProductListScreen = ({history,match}) => {
         {loadingCreate&&<Loader/>}
         {errorCreate&&<Message variant='danger'>{errorCreate}</Message>}
         {loading?<Loader/>:error?<Message variant='danger'>{error}</Message>:(
-            <Table striped bordered hover responsive className='table-sm'>
+            <><Table striped bordered hover responsive className='table-sm'>
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -102,6 +105,8 @@ const ProductListScreen = ({history,match}) => {
                     ))}
                 </tbody>
             </Table>
+            <Paginate pages={pages} page={page} isAdmin={true}/>
+            </>
         )} 
     </>
   )
