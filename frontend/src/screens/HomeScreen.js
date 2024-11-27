@@ -6,6 +6,7 @@ import Paginate from "../components/Paginate.js";
 import Message from '../components/Message.js';
 import { Col, Row } from 'react-bootstrap';
 import { listProducts } from '../actions/productActions.js';
+import ProductCarousel from '../components/ProductCarousel.js';
 
 const HomeScreen = ({match}) =>
 {
@@ -25,6 +26,7 @@ const HomeScreen = ({match}) =>
 
   return (
     <>
+      {!keyword&&<ProductCarousel/>}
       <h1>Latest Products</h1>
       {loading?<Loader/>:error?<Message variant='danger'>{error}</Message>:(<><Row>
         {products.map((product) => (
