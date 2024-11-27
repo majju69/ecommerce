@@ -11,7 +11,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder.js",
     "data:destroy": "node backend/seeder.js -d",
-    "build":"node backend/server.js"
+    "build":"npm install --frontend && node backend/server.js --frontend"
   },
   "author": "Kush Mazumdar",
   "license": "MIT",
