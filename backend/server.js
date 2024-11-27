@@ -49,7 +49,7 @@ app.use(notFound);
 app.use(errorHandler);
 
 app.use('/api', proxy);
-const PORT=process.env.PORT || 8000;
+const PORT=process.env.PORT || 3000;
 
 
 app.listen(PORT,()=>
