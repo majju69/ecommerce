@@ -1,4 +1,5 @@
 import React,{useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from'react-redux';
 import Product from "../components/Product.js";
 import Loader from "../components/Loader.js";
@@ -26,7 +27,7 @@ const HomeScreen = ({match}) =>
 
   return (
     <>
-      {!keyword&&<ProductCarousel/>}
+      {!keyword?<ProductCarousel/>:<Link to={"/"} className="btn btn-light">Go Back</Link>}
       <h1>Latest Products</h1>
       {loading?<Loader/>:error?<Message variant='danger'>{error}</Message>:(<><Row>
         {products.map((product) => (
